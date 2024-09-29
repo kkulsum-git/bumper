@@ -19,7 +19,7 @@
             width: 100%;
             height: 100%;
         }
-        #playButton, #unmuteButton {
+        #playButton {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -32,9 +32,6 @@
             cursor: pointer;
             z-index: 10;
             border-radius: 5px; /* Rounded corners for the button */
-        }
-        #unmuteButton {
-            display: none; /* Initially hidden */
         }
         iframe {
             width: 100%;
@@ -52,7 +49,6 @@
             allowfullscreen>
         </iframe>
         <button id="playButton">Play Video</button>
-        <button id="unmuteButton">Unmute</button>
     </div>
 
     <script>
@@ -75,17 +71,15 @@
         // Function to play video on button click
         document.getElementById('playButton').onclick = function() {
             player.playVideo(); // Start the video
-            this.style.display = 'none'; // Hide the play button after clicking
-            document.getElementById('unmuteButton').style.display = 'block'; // Show the unmute button
-        };
-
-        // Function to unmute the video
-        document.getElementById('unmuteButton').onclick = function() {
-            player.unMute(); // Unmute the video
-            this.style.display = 'none'; // Hide the unmute button after clicking
+            this.style.display = 'none'; // Hide the button after clicking
         };
 
         // Function to handle video state changes
         function onPlayerStateChange(event) {
             if (event.data === YT.PlayerState.ENDED) {
-                window.location.href = "https://sites.google.com/guru.sma.bel
+                window.location.href = "https://sites.google.com/guru.sma.belajar.id/ilmubykkulsum"; // Redirect after video ends
+            }
+        }
+    </script>
+</body>
+</html>
