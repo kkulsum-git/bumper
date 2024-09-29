@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Bumper</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+        }
+        iframe {
+            width: 80%;
+            height: 80vh;
+        }
+    </style>
+</head>
+<body>
+
+<iframe id="youtubeVideo" 
+    src="https://www.youtube.com/embed/lBSXYUhD3Cc?si=LnmVi5kp_FW7mQBN?autoplay=1&controls=0&rel=0&showinfo=0&modestbranding=1" 
+    frameborder="0" 
+    allow="autoplay; encrypted-media" 
+    allowfullscreen>
+</iframe>
+
+<script>
+    var redirectUrl = "https://sites.google.com/guru.sma.belajar.id/
+ilmubykkulsum"; // Ganti dengan URL tujuan Anda
+
+    // Memuat YouTube Iframe API
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtubeVideo', {
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    // Fungsi untuk redirect setelah video selesai
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+            window.location.href = redirectUrl;
+        }
+    }
+</script>
+
+</body>
+</html>
