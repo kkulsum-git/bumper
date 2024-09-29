@@ -4,19 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Player</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        #videoContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
-    <iframe id="videoPlayer" width="100%" height="100%" 
-        src="https://www.youtube.com/embed/lBSXYUhD3Cc?si=bejA4EvIiNZaEV-1&autoplay=1&mute=1&fs=1&rel=0&showinfo=0&modestbranding=1"
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-    </iframe>
+    <div id="videoContainer"></div>
 
     <script>
-        // Redirect after the video ends
-        var videoDuration = 2760; // Duration in seconds (replace with actual video length)
-        setTimeout(function(){
-            window.location.href = "https://sites.google.com/guru.sma.belajar.id/ilmubykkulsum";
-        }, videoDuration * 1000); // Convert seconds to milliseconds
+        // Load the IFrame Player API code asynchronously
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Create a YouTube player
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('videoContainer', {
+                height: '100%',
+                width: '100%',
+                videoId: 'lBSXYUhD3Cc',
+                playerVars: {
+                    'autoplay': 1,
+                    'mute': 1,
+                    'controls': 0,
+                    'rel': 0,
+                    'showinfo': 0
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Function to handle when the player is ready
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        // Function to handle video state changes
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                window.location.href = "https://sites.google.com/guru.sma.belajar.id/ilmubykkulsum";
+            }
+        }
     </script>
 </body>
 </html>
