@@ -52,18 +52,34 @@
     </div>
 
     <script>
-        // Play video on button click
+        // Load the IFrame Player API code asynchronously
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('videoFrame', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Function to play video on button click
         document.getElementById('playButton').onclick = function() {
-            var videoFrame = document.getElementById('videoFrame');
-            videoFrame.src += "&autoplay=1"; // Start autoplay on button click
+            player.playVideo(); // Start the video
             this.style.display = 'none'; // Hide the button after clicking
         };
 
-        // Redirect after the video ends (11 seconds)
-        var videoDuration = 11; // Duration in seconds (updated to 11 seconds)
-        setTimeout(function(){
-            window.location.href = "https://sites.google.com/guru.sma.belajar.id/ilmubykkulsum";
-        }, videoDuration * 1000); // Convert seconds to milliseconds
+        // Function to handle video state changes
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                window.location.href = "https://sites.google.com/guru.sma.belajar.id/ilmubykkulsum"; // Redirect after video ends
+            }
+        }
     </script>
 </body>
 </html>
