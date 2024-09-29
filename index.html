@@ -9,31 +9,77 @@
             height: 100%;
             margin: 0;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black; /* Background color for better visibility */
         }
         #videoContainer {
+            position: relative;
             width: 100%;
             height: 100%;
+        }
+        #playButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 5px; /* Rounded corners for the button */
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Remove border for a cleaner look */
         }
     </style>
 </head>
 <body>
     <div id="videoContainer">
         <iframe 
-            src="https://www.youtube.com/embed/lBSXYUhD3Cc?autoplay=1&mute=1&controls=0&rel=0&showinfo=0"
-            width="100%" 
-            height="100%" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media" 
+            id="videoFrame"
+            src="https://www.youtube.com/embed/lBSXYUhD3Cc?autoplay=0&controls=0&rel=0&showinfo=0"
+            allow="encrypted-media" 
             allowfullscreen>
         </iframe>
+        <button id="playButton">Play Video</button>
     </div>
 
     <script>
-        // Redirect after a specific time (update duration if necessary)
-        var videoDuration = 11; // Duration in seconds (adjust if needed)
-        setTimeout(function(){
-            window.location.href = "https://sites.google.com/guru.sma.belajar.id/ilmubykkulsum";
-        }, videoDuration * 1000); // Convert seconds to milliseconds
+        // Load the IFrame Player API code asynchronously
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('videoFrame', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Function to play video on button click
+        document.getElementById('playButton').onclick = function() {
+            player.playVideo(); // Start the video
+            this.style.display = 'none'; // Hide the button after clicking
+        };
+
+        // Function to handle video state changes
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                window.location.href = "https://sites.google.com/guru.sma.belajar.id/ilmubykkulsum"; // Redirect after video ends
+            }
+        }
     </script>
 </body>
 </html>
